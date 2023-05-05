@@ -1,0 +1,8 @@
+POST http://localhost:4004/catalog/Grammar
+Content-Type: application/json
+
+{"grammarID": 1, "product_ID": "889f95c1-670d-4006-9c35-90703e88b103", "basicGrammarAmount": "0.1"}
+
+###
+
+GET http://localhost:4004/catalog/Product?$expand=toGrammar
