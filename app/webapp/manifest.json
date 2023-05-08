@@ -1,0 +1,86 @@
+{
+    "_version": "1.8.0",
+    "sap.app": {
+        "id": "warehouse",
+        "type": "application",
+        "title": "Browse Products",
+        "description": "Restaurant Warehouse Application",
+        "i18n": "i18n/i18n.properties",
+        "dataSources": {
+            "CatalogService": {
+                "uri": "/catalog/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "4.0"
+                }
+            }
+        }
+    },
+    "sap.ui5": {
+        "dependencies": {
+            "libs": {}
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            },
+            "": {
+                "dataSource": "CatalogService",
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true,
+                    "groupProperties": {
+                        "default": {
+                            "submit": "Auto"
+                        }
+                    }
+                }
+            }
+        },
+        "routing": {
+            "routes": [{
+                    "pattern": "",
+                    "name": "ProductList",
+                    "target": "ProductList"
+                },
+                {
+                    "pattern": "Product({key})",
+                    "name": "ProductDetails",
+                    "target": "ProductDetails"
+                }
+            ],
+            "targets": {
+                "ProductList": {
+                    "type": "Component",
+                    "id": "ProductList",
+                    "name": "sap.fe.templates.ListReport",
+                    "options": {
+                        "settings": {
+                            "entitySet": "Product",
+                            "navigation": {
+                                "Product": {
+                                    "detail": {
+                                        "route": "ProductDetails"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "ProductDetails": {
+                    "type": "Component",
+                    "id": "ProductDetails",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "entitySet": "Product"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
