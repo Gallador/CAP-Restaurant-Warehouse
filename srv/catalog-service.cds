@@ -1,6 +1,7 @@
 using my.warehouse as my from '../db/schema';
 
 service CatalogService {
+
     entity Product as projection on my.Product;
     entity Pizza as projection on my.Pizza;
     entity PizzaProduct as projection on my.PizzaProduct;
