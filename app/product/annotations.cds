@@ -46,7 +46,6 @@ annotate service.Product with @(
                 $Type : 'UI.DataField',
                 Value : modifiedAt
             }
-
             ]
         },
         Facets : [
@@ -70,7 +69,6 @@ annotate service.Product with @(
                 Target : '@UI.FieldGroup#GeneratedGroup2'
             }]
         }
-
     ]
     },
     Common.SortOrder : [{

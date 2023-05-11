@@ -12,15 +12,16 @@
     },
     "devDependencies": {
         "@sap/ux-specification": "^1.108.4",
-        "sqlite3": "^5.1.6",
-        "rimraf": "^3.0.2"
+        "rimraf": "^3.0.2",
+        "sqlite3": "^5.1.6"
     },
     "scripts": {
         "start": "cds-serve",
         "watch-product": "cds watch --open product/webapp/index.html?sap-ui-xx-viewCache=false",
         "undeploy": "cf undeploy warehouse --delete-services --delete-service-keys --delete-service-brokers",
         "build": "rimraf resources mta_archives && mbt build --mtar archive",
-        "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
+        "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+        "watch-supply": "cds watch --open supply/webapp/index.html?sap-ui-xx-viewCache=false"
     },
     "cds": {
         "hana": {
@@ -36,6 +37,7 @@
         }
     },
     "sapux": [
-        "app/product"
+        "app/product",
+        "app/supply"
     ]
 }

@@ -24,12 +24,20 @@ annotate CatalogService.Product with {
     productName @title:'{i18n>ProductName}';
     productBalance @title:'{i18n>ProductBalance}';
     productMeasurement @title:'{i18n>ProductMeasurement}'
+    /*@assert.enum
     @Common.ValueListWithFixedValues: true
-    /*@Common.ValueList: {
-        CollectionPath : 'Product',
-        FetchValues : 1,
+    @Common.ValueList: {
+        CollectionPath : '',
         Parameters : [
-           
+           {
+               $Type : 'Common.ValueListParameterInOut',
+               LocalDataProperty : productMeasurement,
+               ValueListProperty : 'productMeasurement',
+           },
+           {
+               $Type : 'Common.ValueListParameterDisplayOnly',
+               ValueListProperty : 'productMeasurement',
+           }
         ]
     }*/;
 }

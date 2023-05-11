@@ -37,9 +37,23 @@ modules:
       - product.zip
       name: product
       target-path: resources/
+    - artifacts:
+      - supply.zip
+      name: supply
+      target-path: resources/
 - name: product
   type: html5
   path: app/product
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: supply
+  type: html5
+  path: app/supply
   build-parameters:
     build-result: dist
     builder: custom
