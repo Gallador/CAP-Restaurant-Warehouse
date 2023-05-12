@@ -27,11 +27,11 @@ annotate CatalogService.Product with {
     /*@assert.enum
     @Common.ValueListWithFixedValues: true
     @Common.ValueList: {
-        CollectionPath : '',
+        CollectionPath : 'Product',
         Parameters : [
            {
                $Type : 'Common.ValueListParameterInOut',
-               LocalDataProperty : productMeasurement,
+               LocalDataProperty : ID,
                ValueListProperty : 'productMeasurement',
            },
            {

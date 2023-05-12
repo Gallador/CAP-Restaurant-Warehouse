@@ -41,6 +41,10 @@ modules:
       - supply.zip
       name: supply
       target-path: resources/
+    - artifacts:
+      - supplyitems.zip
+      name: supplyitems
+      target-path: resources/
 - name: product
   type: html5
   path: app/product
@@ -54,6 +58,16 @@ modules:
 - name: supply
   type: html5
   path: app/supply
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: supplyitems
+  type: html5
+  path: app/supply_items
   build-parameters:
     build-result: dist
     builder: custom

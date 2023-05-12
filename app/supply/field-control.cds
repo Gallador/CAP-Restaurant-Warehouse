@@ -1,6 +1,6 @@
 using CatalogService as service from '../../srv/catalog-service';
 
-annotate CatalogService.Supply with {
+annotate service.Supply with {
     supplyID @readonly;
     supplyDeliver @mandatory;
     createdAt @readonly;

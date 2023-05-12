@@ -60,6 +60,11 @@ annotate service.Product with @(
             }]
         },
         {
+            $Type  : 'UI.ReferenceFacet',
+            Label  : 'Supplies',
+            Target : 'toSupplyItems/@UI.LineItem' 
+        },
+        {
             $Type  : 'UI.CollectionFacet',
             ID     : 'Admininfo',
             Label  : '{i18n>adminInfo}',

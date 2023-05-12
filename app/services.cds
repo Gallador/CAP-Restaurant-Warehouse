@@ -11,3 +11,12 @@ using from './supply/annotations';
 using from './supply/capabilities';
 using from './supply/field-control';
 using from './supply/labels';
+using from './supply/value-helps';
+
+// SUPPLY ITEMS
+
+using from './supply_items/annotations';
+using from './supply_items/capabilities';
+using from './supply_items/field-control';
+using from './supply_items/labels';
+using from './supply_items/value-helps';

@@ -88,6 +88,11 @@ annotate service.Supply with @(
             }]
         },
         {
+            $Type  : 'UI.ReferenceFacet',
+            Label  : 'Supply Items',
+            Target : 'toSupplyItems/@UI.LineItem' 
+        },
+        {
             $Type  : 'UI.CollectionFacet',
             ID     : 'Admininfo',
             Label  : '{i18n>adminInfo}',

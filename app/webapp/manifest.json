@@ -3,6 +3,9 @@
     "sap.app": {
         "id": "warehouse",
         "type": "application",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
         "title": "Browse Products",
         "description": "Restaurant Warehouse Application",
         "i18n": "i18n/i18n.properties",
@@ -16,9 +19,33 @@
             }
         }
     },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
     "sap.ui5": {
         "dependencies": {
-            "libs": {}
+            "minUI5Version": "1.95.0",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.fe.templates": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
         },
         "models": {
             "i18n": {
@@ -47,9 +74,39 @@
                     "target": "ProductList"
                 },
                 {
-                    "pattern": "Product({key})",
+                    "pattern": "Product({key}):?query:",
                     "name": "ProductDetails",
                     "target": "ProductDetails"
+                },
+                {
+                    "pattern": "",
+                    "name": "SupplyList",
+                    "target": "SupplyList"
+                },
+                {
+                    "pattern": "Supply({key}):?query:",
+                    "name": "SupplyDetails",
+                    "target": "SupplyDetails"
+                },
+                {
+                    "pattern": "",
+                    "name": "SupplyItemsList",
+                    "target": "SupplyItemsList"
+                },
+                {
+                    "pattern": "SupplyItems({key}):?query:",
+                    "name": "SupplyItemsDetails",
+                    "target": "SupplyItemsDetails"
+                },
+                {
+                    "pattern": "Product({key})/toSupplyItems({key2}):?query:",
+                    "name": "SupplyItemsDetails",
+                    "target": "SupplyItemsDetails"
+                },
+                {
+                    "pattern": "Supply({key})/toSupplyItems({key2}):?query:",
+                    "name": "SupplyItemsDetails",
+                    "target": "SupplyItemsDetails"
                 }
             ],
             "targets": {
@@ -76,7 +133,59 @@
                     "name": "sap.fe.templates.ObjectPage",
                     "options": {
                         "settings": {
-                            "entitySet": "Product"
+                            "entitySet": "Product",
+                            "navigation": {
+                                "toSupplyItems": {
+                                    "detail": {
+                                        "route": "SupplyItemsDetails"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "SupplyList": {
+                    "type": "Component",
+                    "id": "SupplyList",
+                    "name": "sap.fe.templates.ListReport",
+                    "options": {
+                        "settings": {
+                            "entitySet": "Supply",
+                            "navigation": {
+                                "Supply": {
+                                    "detail": {
+                                        "route": "SupplyDetails"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "SupplyDetails": {
+                    "type": "Component",
+                    "id": "SupplyDetails",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "entitySet": "Supply",
+                            "navigation": {
+                                "toSupplyItems": {
+                                    "detail": {
+                                        "route": "SupplyItemsDetails"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "SupplyItemsDetails": {
+                    "type": "Component",
+                    "id": "SupplyItemsDetails",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "editableHeaderContent": false,
+                            "entitySet": "SupplyItems"
                         }
                     }
                 }

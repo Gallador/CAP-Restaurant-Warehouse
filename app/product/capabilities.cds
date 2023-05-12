@@ -1,6 +1,6 @@
 using CatalogService from '../../srv/catalog-service';
 
-annotate CatalogService.Product with @odata.draft.enabled;
+//annotate CatalogService.Product with @odata.draft.enabled;
 
 annotate CatalogService.Product with @(
     Capabilities                    : {
