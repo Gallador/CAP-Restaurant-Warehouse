@@ -22,7 +22,14 @@ annotate service.Product with @(
             },
             {
                 $Type : 'UI.DataField',
-                Value : productMeasurement,
+                Label :'{i18n>ProductMeasurement}',
+                Value : productMeasurement_measCode,
+                ![@UI.Importance] : #High
+            },
+            {
+                $Type : 'UI.DataField',
+                Label :'{i18n>ProductMeasurement}',
+                Value : productMeasurement.measDescription,
                 ![@UI.Importance] : #High
             }
             ],

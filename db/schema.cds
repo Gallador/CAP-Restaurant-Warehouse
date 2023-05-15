@@ -12,19 +12,16 @@ entity Product : cuid, managed
     productID : Integer;
     productName : String;
     productBalance : Decimal;
-    productMeasurement : Measurement;
+    productMeasurement : Association to one Measurement;
     toPizzaProduct : Composition of many PizzaProduct on toPizzaProduct.product = $self;
     toGrammar : Composition of one Grammar on toGrammar.product = $self;
-    toSupplyItems : Composition of many SupplyItems on toSupplyItems.product = $self;
+    toSupplyItems : Association to many SupplyItems on toSupplyItems.product = $self; //Composition of many SupplyItems on toSupplyItems.product = $self
 }
 
-@assert.range
-type Measurement : String enum {
-    gramm;
-    kilogram;
-    mililiter;
-    liter;
-    pieces;
+entity Measurement : managed 
+{
+    key measCode : String;
+    measDescription : String;
 }
 
 entity Pizza : cuid, managed
@@ -60,12 +57,7 @@ entity OrderItem : cuid, managed
 entity Size : cuid, managed
 {
     sizeID : Integer;
-    sizeName : String enum
-    {
-        small = '30cm';
-        medium = '40cm';
-        big = '50cm';
-    };
+    sizeName : String;
     sizeIndex : Decimal;
     toOrderItem : Composition of many OrderItem on toOrderItem.size = $self;
 }

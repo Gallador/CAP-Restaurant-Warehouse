@@ -11,7 +11,7 @@ annotate service.SupplyItems with @(
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'Product',
+                Label : '{i18n>ProductName}',
                 Value : product_ID,
                 ![@UI.Importance] : #High
             },

@@ -8,13 +8,13 @@ annotate CatalogService.Product with @(
             {Value: productID},
             {Value: productName},
             {Value: productBalance},
-            {Value: productMeasurement}
+            {$Type : 'UI.DataField', Value: productMeasurement.measDescription, Label :'{i18n>ProductMeasurement}'}
         ],
         HeaderInfo: {
             TypeName: '{i18n>Product}',
             TypeNamePlural: '{i18n>Products}',
             Title: {Value: productName},
-            Description: {Value: productMeasurement}
+            Description: {Value: productMeasurement.measDescription}
         }
     }
 );
@@ -24,25 +24,21 @@ annotate CatalogService.Product with {
     productName @title:'{i18n>ProductName}';
     productBalance @title:'{i18n>ProductBalance}';
     productMeasurement @title:'{i18n>ProductMeasurement}'
-    /*@assert.enum
+    @Common.Text: productMeasurement.measDescription
+    @Common.TextArrangement: #TextOnly
     @Common.ValueListWithFixedValues: true
     @Common.ValueList: {
-        CollectionPath : 'Product',
+        CollectionPath : 'Measurement',
         Parameters : [
            {
                $Type : 'Common.ValueListParameterInOut',
-               LocalDataProperty : ID,
-               ValueListProperty : 'productMeasurement',
+               LocalDataProperty : productMeasurement_measCode,
+               ValueListProperty : 'measCode',
            },
            {
                $Type : 'Common.ValueListParameterDisplayOnly',
-               ValueListProperty : 'productMeasurement',
+               ValueListProperty : 'measDescription',
            }
         ]
-    }*/;
+    };
 }
-
-/*annotate CatalogService.Authors with {
-    ID @title:'{i18n>ID}' @UI.HiddenFilter;
-    name @title:'{i18n>AuthorName}';
-}*/
