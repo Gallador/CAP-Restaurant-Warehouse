@@ -13,7 +13,7 @@ entity Product : cuid, managed
     productName : String;
     productBalance : Decimal;
     productMeasurement : Association to one Measurement;
-    toPizzaProduct : Composition of many PizzaProduct on toPizzaProduct.product = $self;
+    toPizzaProduct : Association to many PizzaProduct on toPizzaProduct.product = $self;
     toGrammar : Composition of one Grammar on toGrammar.product = $self;
     toSupplyItems : Association to many SupplyItems on toSupplyItems.product = $self; //Composition of many SupplyItems on toSupplyItems.product = $self
 }
@@ -29,7 +29,7 @@ entity Pizza : cuid, managed
     pizzaID : Integer;
     pizzaName : String;
     toPizzaProduct : Composition of many PizzaProduct on toPizzaProduct.pizza = $self;
-    toOrderItem : Composition of many OrderItem on toOrderItem.pizza = $self;
+    toOrderItem : Association to many OrderItem on toOrderItem.pizza = $self;
 }
 
 entity PizzaProduct : cuid, managed
@@ -74,6 +74,10 @@ entity Supply : cuid, managed
     supplyID : Integer;
     toSupplyItems : Composition of many SupplyItems on toSupplyItems.supply = $self;
     supplyDeliver : String;
+    supplyStatus : String enum {
+        NEW;
+        PAID;
+    }
 }
 
 entity SupplyItems : cuid, managed

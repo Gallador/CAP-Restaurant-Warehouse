@@ -4,4 +4,7 @@ annotate service.Supply with {
     supplyID @readonly;
     supplyDeliver @mandatory;
     createdAt @readonly;
+    supplyStatus @readonly;
 }
+
+//annotate service.Supply with @UI.CreateHidden: ;

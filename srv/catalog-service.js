@@ -5,17 +5,25 @@ module.exports = cds.service.impl(async function () {
 
     let { Supply, SupplyItems, Product } = this.entities;
 
-    recordID = 0;
-
-    this.before('NEW', 'Supply', async(req)=>{
-        const{maxID} = await SELECT.one`max(supplyID) as maxID`.from(Supply);
+    this.before('NEW', 'Supply', async (req) => {
+        const { maxID } = await SELECT.one`max(supplyID) as maxID`.from(Supply);
         req.data.supplyID = maxID + 1;
-        recordID = req.data.supplyID;
+        req.data.supplyStatus = 'NEW';
     });
 
-    /*this.after('CREATE', 'Supply', async(req)=>{
-        const {supplyItems} = await SELECT `product_id as supplyItems`.from(SupplyItems).where({supply_id:req.data.ID});//req.data.supplyID); //db.read('SELECT productBalance FROM Product as p WHERE p.ID = ', [req.data.product_id]);
-        a = 0;  
-    });*/
+    this.after('CREATE', 'Supply', async (req) => {
+        const { toSupplyItems } = req;
+        toSupplyItems.forEach(async supplyItem => {
+            const { product_ID, supplyAmount } = supplyItem;
+            await UPDATE(Product, product_ID).with({ productBalance: { '+=': supplyAmount } });
+        })
+    });
+
+    this.on('CANCEL', 'SupplyItems', async (req) => {
+        const { ID } = req.data;
+        const supplyItem = await SELECT.one.from(SupplyItems).where({ID:ID})
+        const {product_ID, supplyAmount} = supplyItem
+        await UPDATE(Product, product_ID).with({ productBalance: {'-=': supplyAmount} });
+    })
 
 })

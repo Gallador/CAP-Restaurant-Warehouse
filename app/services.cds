@@ -20,3 +20,17 @@ using from './supply_items/capabilities';
 using from './supply_items/field-control';
 using from './supply_items/labels';
 using from './supply_items/value-helps';
+
+// PIZZA
+
+using from './pizza/annotations';
+using from './pizza/capabilities';
+using from './pizza/field-control';
+using from './pizza/labels';
+
+// PIZZA PRODUCT
+
+using from './pizza_product/annotations';
+using from './pizza_product/capabilities';
+using from './pizza_product/field-control';
+using from './pizza_product/labels';

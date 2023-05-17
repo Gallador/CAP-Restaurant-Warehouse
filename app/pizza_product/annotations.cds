@@ -1,12 +1,17 @@
 using CatalogService as service from '../../srv/catalog-service';
 
-annotate service.SupplyItems with @(
-    UI: {
+annotate service.PizzaProduct with @(
+    UI : { 
         Identification  : [ {Value: ID} ],
-        LineItem  : [
+        LineItem  : [ 
             {
                 $Type : 'UI.DataField',
-                Value : supply.supplyID,
+                Value : recordID,
+                ![@UI.Importance] : #High
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : pizza.pizzaID,
                 ![@UI.Importance] : #High
             },
             {
@@ -14,17 +19,12 @@ annotate service.SupplyItems with @(
                 Label : '{i18n>ProductName}',
                 Value : product_ID,
                 ![@UI.Importance] : #High
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : supplyAmount,
-                ![@UI.Importance] : #High
             }
         ],
         PresentationVariant  : {
             $Type : 'UI.PresentationVariantType',
             GroupBy : [
-                supply.supplyID
+                pizza.pizzaID
             ],
             SortOrder : [
                 {
@@ -33,7 +33,7 @@ annotate service.SupplyItems with @(
                 },
             ],
         },
-        FieldGroup #SupplyItemDetails : {
+        FieldGroup #PizzaProductDetails : {
             $Type : 'UI.FieldGroupType',
             Data : [
                 {
@@ -41,23 +41,19 @@ annotate service.SupplyItems with @(
                 Label : '{i18n>ProductName}',
                 Value : product_ID
             },
-            {
-                $Type : 'UI.DataField',
-                Value : supplyAmount,
-            },
             ]
         },
         Facets  : [
         {
             $Type  : 'UI.CollectionFacet',
-            ID     : 'SupplyItemDetails',
-            Label  : '{i18n>supplyItemInfo}',
+            ID     : 'PizzaProductDetails',
+            Label  : '{i18n>pizzaProductInfo}',
             Facets : [{
                 $Type  : 'UI.ReferenceFacet',
-                Label  : '{i18n>supplyItemInfo}',
-                Target : '@UI.FieldGroup#SupplyItemDetails'
+                Label  : '{i18n>pizzaProductInfo}',
+                Target : '@UI.FieldGroup#PizzaProductDetails'
             }]
         }
         ],
-    }
+     },
 );

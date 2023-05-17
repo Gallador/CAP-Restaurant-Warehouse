@@ -178,6 +178,7 @@
                         }
                     }
                 },
+                
                 "SupplyItemsDetails": {
                     "type": "Component",
                     "id": "SupplyItemsDetails",
@@ -188,7 +189,7 @@
                             "entitySet": "SupplyItems"
                         }
                     }
-                }
+                }               
             }
         }
     }

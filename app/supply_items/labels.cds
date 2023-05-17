@@ -14,7 +14,6 @@ annotate service.SupplyItems with {
                $Type : 'Common.ValueListParameterInOut',
                LocalDataProperty : product_ID,
                ValueListProperty : 'ID',
-               ![@UI.Hidden],
             },
            {
                $Type : 'Common.ValueListParameterDisplayOnly',
@@ -22,7 +21,7 @@ annotate service.SupplyItems with {
            },
            {
                $Type : 'Common.ValueListParameterDisplayOnly',
-               ValueListProperty : 'productMeasurement',
+               ValueListProperty : 'productMeasurement_measCode',
            }
         ]
     };

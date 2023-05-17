@@ -4,4 +4,5 @@ annotate service.Supply with {
     supplyID @title : '{i18n>SupplyID}';
     supplyDeliver @title : '{i18n>SupplyDeliver}';
     createdAt @title : '{i18n>createdAt}';
+    supplyStatus @title : '{i18n>supplyStatus}'
 };

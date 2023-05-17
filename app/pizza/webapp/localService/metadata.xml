@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.xml">
+        <edmx:Include Alias="Validation" Namespace="Org.OData.Validation.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="CatalogService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Product" EntityType="CatalogService.Product">
+                    <NavigationPropertyBinding Path="productMeasurement" Target="Measurement"/>
+                    <NavigationPropertyBinding Path="toPizzaProduct" Target="PizzaProduct"/>
+                    <NavigationPropertyBinding Path="toGrammar" Target="Grammar"/>
+                    <NavigationPropertyBinding Path="toSupplyItems" Target="SupplyItems"/>
+                </EntitySet>
+                <EntitySet Name="Measurement" EntityType="CatalogService.Measurement"/>
+                <EntitySet Name="Pizza" EntityType="CatalogService.Pizza">
+                    <NavigationPropertyBinding Path="toPizzaProduct" Target="PizzaProduct"/>
+                    <NavigationPropertyBinding Path="toOrderItem" Target="OrderItem"/>
+                </EntitySet>
+                <EntitySet Name="PizzaProduct" EntityType="CatalogService.PizzaProduct">
+                    <NavigationPropertyBinding Path="pizza" Target="Pizza"/>
+                    <NavigationPropertyBinding Path="product" Target="Product"/>
+                </EntitySet>
+                <EntitySet Name="Order" EntityType="CatalogService.Order">
+                    <NavigationPropertyBinding Path="toOrderItem" Target="OrderItem"/>
+                </EntitySet>
+                <EntitySet Name="OrderItem" EntityType="CatalogService.OrderItem">
+                    <NavigationPropertyBinding Path="order" Target="Order"/>
+                    <NavigationPropertyBinding Path="pizza" Target="Pizza"/>
+                    <NavigationPropertyBinding Path="size" Target="Size"/>
+                </EntitySet>
+                <EntitySet Name="Size" EntityType="CatalogService.Size">
+                    <NavigationPropertyBinding Path="toOrderItem" Target="OrderItem"/>
+                </EntitySet>
+                <EntitySet Name="Grammar" EntityType="CatalogService.Grammar">
+                    <NavigationPropertyBinding Path="product" Target="Product"/>
+                </EntitySet>
+                <EntitySet Name="Supply" EntityType="CatalogService.Supply">
+                    <NavigationPropertyBinding Path="toSupplyItems" Target="SupplyItems"/>
+                </EntitySet>
+                <EntitySet Name="SupplyItems" EntityType="CatalogService.SupplyItems">
+                    <NavigationPropertyBinding Path="supply" Target="Supply"/>
+                    <NavigationPropertyBinding Path="product" Target="Product"/>
+                </EntitySet>
+            </EntityContainer>
+            <EntityType Name="Product">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="productID" Type="Edm.Int32"/>
+                <Property Name="productName" Type="Edm.String"/>
+                <Property Name="productBalance" Type="Edm.Decimal" Scale="variable"/>
+                <NavigationProperty Name="productMeasurement" Type="CatalogService.Measurement">
+                    <ReferentialConstraint Property="productMeasurement_measCode" ReferencedProperty="measCode"/>
+                </NavigationProperty>
+                <Property Name="productMeasurement_measCode" Type="Edm.String"/>
+                <NavigationProperty Name="toPizzaProduct" Type="Collection(CatalogService.PizzaProduct)" Partner="product"/>
+                <NavigationProperty Name="toGrammar" Type="CatalogService.Grammar" Partner="product">
+                    <OnDelete Action="Cascade"/>
+                    <ReferentialConstraint Property="product_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="toSupplyItems" Type="Collection(CatalogService.SupplyItems)" Partner="product"/>
+            </EntityType>
+            <EntityType Name="Measurement">
+                <Key>
+                    <PropertyRef Name="measCode"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="measCode" Type="Edm.String" Nullable="false"/>
+                <Property Name="measDescription" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="Pizza">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="pizzaID" Type="Edm.Int32"/>
+                <Property Name="pizzaName" Type="Edm.String"/>
+                <NavigationProperty Name="toPizzaProduct" Type="Collection(CatalogService.PizzaProduct)" Partner="pizza">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="toOrderItem" Type="Collection(CatalogService.OrderItem)" Partner="pizza"/>
+            </EntityType>
+            <EntityType Name="PizzaProduct">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="recordID" Type="Edm.Int32"/>
+                <NavigationProperty Name="pizza" Type="CatalogService.Pizza" Partner="toPizzaProduct">
+                    <ReferentialConstraint Property="pizza_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="pizza_ID" Type="Edm.Guid"/>
+                <NavigationProperty Name="product" Type="CatalogService.Product" Partner="toPizzaProduct">
+                    <ReferentialConstraint Property="product_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="product_ID" Type="Edm.Guid"/>
+            </EntityType>
+            <EntityType Name="Order">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="orderID" Type="Edm.Int32"/>
+                <Property Name="orderQuantity" Type="Edm.Decimal" Scale="variable"/>
+                <NavigationProperty Name="toOrderItem" Type="Collection(CatalogService.OrderItem)" Partner="order">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="OrderItem">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="itemID" Type="Edm.Int32"/>
+                <NavigationProperty Name="order" Type="CatalogService.Order" Partner="toOrderItem">
+                    <ReferentialConstraint Property="order_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="order_ID" Type="Edm.Guid"/>
+                <NavigationProperty Name="pizza" Type="CatalogService.Pizza" Partner="toOrderItem">
+                    <ReferentialConstraint Property="pizza_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="pizza_ID" Type="Edm.Guid"/>
+                <NavigationProperty Name="size" Type="CatalogService.Size" Partner="toOrderItem">
+                    <ReferentialConstraint Property="size_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="size_ID" Type="Edm.Guid"/>
+            </EntityType>
+            <EntityType Name="Size">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="sizeID" Type="Edm.Int32"/>
+                <Property Name="sizeName" Type="Edm.String"/>
+                <Property Name="sizeIndex" Type="Edm.Decimal" Scale="variable"/>
+                <NavigationProperty Name="toOrderItem" Type="Collection(CatalogService.OrderItem)" Partner="size">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Grammar">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="grammarID" Type="Edm.Int32"/>
+                <NavigationProperty Name="product" Type="CatalogService.Product" Partner="toGrammar">
+                    <ReferentialConstraint Property="product_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="product_ID" Type="Edm.Guid"/>
+                <Property Name="basicGrammarAmount" Type="Edm.Decimal" Scale="variable"/>
+            </EntityType>
+            <EntityType Name="Supply">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="supplyID" Type="Edm.Int32"/>
+                <NavigationProperty Name="toSupplyItems" Type="Collection(CatalogService.SupplyItems)" Partner="supply">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <Property Name="supplyDeliver" Type="Edm.String"/>
+                <Property Name="supplyStatus" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="SupplyItems">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <NavigationProperty Name="supply" Type="CatalogService.Supply" Partner="toSupplyItems">
+                    <ReferentialConstraint Property="supply_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="supply_ID" Type="Edm.Guid"/>
+                <NavigationProperty Name="product" Type="CatalogService.Product" Partner="toSupplyItems">
+                    <ReferentialConstraint Property="product_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="product_ID" Type="Edm.Guid"/>
+                <Property Name="supplyAmount" Type="Edm.Decimal" Scale="variable"/>
+            </EntityType>
+            <Annotations Target="CatalogService.Product">
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="productName"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>productName</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="productID"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="productName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="productBalance"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="productMeasurement/measDescription"/>
+                            <PropertyValue Property="Label" String="{i18n>ProductMeasurement}"/>
+                            </Record>
+                        </Collection>
+                    </Annotation>
+                    <Annotation Term="UI.HeaderInfo">
+                        <Record Type="UI.HeaderInfoType">
+                            <PropertyValue Property="TypeName" String="{i18n>Product}"/>
+                                <PropertyValue Property="TypeNamePlural" String="{i18n>Products}"/>
+                                    <PropertyValue Property="Title">
+                                        <Record Type="UI.DataField">
+                                            <PropertyValue Property="Value" Path="productName"/>
+                                        </Record>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Description">
+                                        <Record Type="UI.DataField">
+                                            <PropertyValue Property="Value" Path="productMeasurement/measDescription"/>
+                                        </Record>
+                                    </PropertyValue>
+                                </Record>
+                            </Annotation>
+                        </Annotations>
+                        <Annotations Target="CatalogService.Product/createdAt">
+                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                            <Annotation Term="Core.Immutable" Bool="true"/>
+                            <Annotation Term="Core.Computed" Bool="true"/>
+                            <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                            </Annotations>
+                            <Annotations Target="CatalogService.Product/createdBy">
+                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                <Annotation Term="Core.Immutable" Bool="true"/>
+                                <Annotation Term="Core.Computed" Bool="true"/>
+                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                    <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                    </Annotations>
+                                    <Annotations Target="CatalogService.Product/modifiedAt">
+                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                        </Annotations>
+                                        <Annotations Target="CatalogService.Product/modifiedBy">
+                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                </Annotations>
+                                                <Annotations Target="CatalogService.Product/productID">
+                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                    <Annotation Term="Common.Label" String="{i18n>ProductID}"/>
+                                                    </Annotations>
+                                                    <Annotations Target="CatalogService.Product/productName">
+                                                        <Annotation Term="Common.Label" String="{i18n>ProductName}"/>
+                                                        </Annotations>
+                                                        <Annotations Target="CatalogService.Product/productBalance">
+                                                            <Annotation Term="Common.Label" String="{i18n>ProductBalance}"/>
+                                                            </Annotations>
+                                                            <Annotations Target="CatalogService.Product/productMeasurement">
+                                                                <Annotation Term="Common.Label" String="{i18n>ProductMeasurement}"/>
+                                                                </Annotations>
+                                                                <Annotations Target="CatalogService.Product/productMeasurement_measCode">
+                                                                    <Annotation Term="Common.Text" Path="productMeasurement/measDescription">
+                                                                        <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+                                                                    </Annotation>
+                                                                    <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+                                                                    <Annotation Term="Common.ValueList">
+                                                                        <Record Type="Common.ValueListType">
+                                                                            <PropertyValue Property="CollectionPath" String="Measurement"/>
+                                                                            <PropertyValue Property="Parameters">
+                                                                                <Collection>
+                                                                                    <Record Type="Common.ValueListParameterInOut">
+                                                                                        <PropertyValue Property="LocalDataProperty" PropertyPath="productMeasurement_measCode"/>
+                                                                                        <PropertyValue Property="ValueListProperty" String="measCode"/>
+                                                                                    </Record>
+                                                                                    <Record Type="Common.ValueListParameterDisplayOnly">
+                                                                                        <PropertyValue Property="ValueListProperty" String="measDescription"/>
+                                                                                    </Record>
+                                                                                </Collection>
+                                                                            </PropertyValue>
+                                                                        </Record>
+                                                                    </Annotation>
+                                                                    <Annotation Term="Common.Label" String="{i18n>ProductMeasurement}"/>
+                                                                    </Annotations>
+                                                                    <Annotations Target="CatalogService.Measurement/createdAt">
+                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                        <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                        </Annotations>
+                                                                        <Annotations Target="CatalogService.Measurement/createdBy">
+                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                            <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                </Annotations>
+                                                                                <Annotations Target="CatalogService.Measurement/modifiedAt">
+                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                    <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="CatalogService.Measurement/modifiedBy">
+                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                            <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                            </Annotations>
+                                                                                            <Annotations Target="CatalogService.Pizza/createdAt">
+                                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                                </Annotations>
+                                                                                                <Annotations Target="CatalogService.Pizza/createdBy">
+                                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                    <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                        </Annotations>
+                                                                                                        <Annotations Target="CatalogService.Pizza/modifiedAt">
+                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                            <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                            </Annotations>
+                                                                                                            <Annotations Target="CatalogService.Pizza/modifiedBy">
+                                                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                    <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                                    </Annotations>
+                                                                                                                    <Annotations Target="CatalogService.PizzaProduct/createdAt">
+                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                        <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                                                        </Annotations>
+                                                                                                                        <Annotations Target="CatalogService.PizzaProduct/createdBy">
+                                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                            <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                                                </Annotations>
+                                                                                                                                <Annotations Target="CatalogService.PizzaProduct/modifiedAt">
+                                                                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                                                    </Annotations>
+                                                                                                                                    <Annotations Target="CatalogService.PizzaProduct/modifiedBy">
+                                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                                                            </Annotations>
+                                                                                                                                            <Annotations Target="CatalogService.Order/createdAt">
+                                                                                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                                                                                </Annotations>
+                                                                                                                                                <Annotations Target="CatalogService.Order/createdBy">
+                                                                                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                    <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                                                                        </Annotations>
+                                                                                                                                                        <Annotations Target="CatalogService.Order/modifiedAt">
+                                                                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                                                                            </Annotations>
+                                                                                                                                                            <Annotations Target="CatalogService.Order/modifiedBy">
+                                                                                                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                                                                                    </Annotations>
+                                                                                                                                                                    <Annotations Target="CatalogService.OrderItem/createdAt">
+                                                                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                        <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                                                                                                        </Annotations>
+                                                                                                                                                                        <Annotations Target="CatalogService.OrderItem/createdBy">
+                                                                                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                            <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                <Annotations Target="CatalogService.OrderItem/modifiedAt">
+                                                                                                                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                    <Annotations Target="CatalogService.OrderItem/modifiedBy">
+                                                                                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                            <Annotations Target="CatalogService.Size/createdAt">
+                                                                                                                                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                <Annotations Target="CatalogService.Size/createdBy">
+                                                                                                                                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                    <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                                        <Annotations Target="CatalogService.Size/modifiedAt">
+                                                                                                                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                                            <Annotations Target="CatalogService.Size/modifiedBy">
+                                                                                                                                                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                    <Annotations Target="CatalogService.Grammar/createdAt">
+                                                                                                                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                        <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                                                        <Annotations Target="CatalogService.Grammar/createdBy">
+                                                                                                                                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                            <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                                                <Annotations Target="CatalogService.Grammar/modifiedAt">
+                                                                                                                                                                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                                    <Annotations Target="CatalogService.Grammar/modifiedBy">
+                                                                                                                                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                                        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                                                                            <Annotations Target="CatalogService.Supply/createdAt">
+                                                                                                                                                                                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                                                <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                                                                <Annotations Target="CatalogService.Supply/createdBy">
+                                                                                                                                                                                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                                                    <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                                                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                                                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                                                                                        <Annotations Target="CatalogService.Supply/modifiedAt">
+                                                                                                                                                                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                                                                                            <Annotations Target="CatalogService.Supply/modifiedBy">
+                                                                                                                                                                                                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                                                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                                                                    <Annotations Target="CatalogService.Supply/supplyStatus">
+                                                                                                                                                                                                                                                                        <Annotation Term="Validation.AllowedValues">
+                                                                                                                                                                                                                                                                            <Collection>
+                                                                                                                                                                                                                                                                                <Record Type="Validation.AllowedValue">
+                                                                                                                                                                                                                                                                                    <Annotation Term="Core.SymbolicName" String="NEW"/>
+                                                                                                                                                                                                                                                                                    <PropertyValue Property="Value" String="NEW"/>
+                                                                                                                                                                                                                                                                                </Record>
+                                                                                                                                                                                                                                                                                <Record Type="Validation.AllowedValue">
+                                                                                                                                                                                                                                                                                    <Annotation Term="Core.SymbolicName" String="PAID"/>
+                                                                                                                                                                                                                                                                                    <PropertyValue Property="Value" String="PAID"/>
+                                                                                                                                                                                                                                                                                </Record>
+                                                                                                                                                                                                                                                                            </Collection>
+                                                                                                                                                                                                                                                                        </Annotation>
+                                                                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                                                                    <Annotations Target="CatalogService.SupplyItems/createdAt">
+                                                                                                                                                                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                                                                        <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                                                                                                        <Annotations Target="CatalogService.SupplyItems/createdBy">
+                                                                                                                                                                                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                                                                            <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                                                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                                                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                                                                                                <Annotations Target="CatalogService.SupplyItems/modifiedAt">
+                                                                                                                                                                                                                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                                                                                    <Annotations Target="CatalogService.SupplyItems/modifiedBy">
+                                                                                                                                                                                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                                                                                        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                                                                                                                        </Schema>
+                                                                                                                                                                                                                                                                                    </edmx:DataServices>
+                                                                                                                                                                                                                                                                                </edmx:Edmx>

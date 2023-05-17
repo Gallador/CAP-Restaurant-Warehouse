@@ -22,7 +22,10 @@
         "build": "rimraf resources mta_archives && mbt build --mtar archive",
         "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
         "watch-supply": "cds watch --open supply/webapp/index.html?sap-ui-xx-viewCache=false",
-        "watch-supply_items": "cds watch --open supply_items/webapp/index.html?sap-ui-xx-viewCache=false"
+        "watch-supply_items": "cds watch --open supply_items/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-pizza": "cds watch --open pizza/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-pizza_product": "cds watch --open pizza_product/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-pizza_topizzaproduct": "cds watch --open pizza_topizzaproduct/webapp/index.html?sap-ui-xx-viewCache=false"
     },
     "cds": {
         "hana": {
@@ -40,6 +43,9 @@
     "sapux": [
         "app/product",
         "app/supply",
-        "app/supply_items"
+        "app/supply_items",
+        "app/pizza",
+        "app/pizza_product",
+        "app/pizza_topizzaproduct"
     ]
 }

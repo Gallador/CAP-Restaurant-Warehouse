@@ -17,6 +17,11 @@ annotate service.Supply with @(
             },
             {
                 $Type : 'UI.DataField',
+                Value : supplyStatus,
+                ![@UI.Importance] : #High
+            },
+            {
+                $Type : 'UI.DataField',
                 Value : createdAt,
                 ![@UI.Importance] : #High
             }
@@ -48,6 +53,10 @@ annotate service.Supply with @(
             {
                 $Type : 'UI.DataField',
                 Value : supplyDeliver,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : supplyStatus,
             },
             {
                 $Type : 'UI.DataField',
@@ -103,5 +112,5 @@ annotate service.Supply with @(
             }]
         },
     ]
-    },
+    }
 );

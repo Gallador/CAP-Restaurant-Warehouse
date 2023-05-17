@@ -45,6 +45,18 @@ modules:
       - supplyitems.zip
       name: supplyitems
       target-path: resources/
+    - artifacts:
+      - pizza.zip
+      name: pizza
+      target-path: resources/
+    - artifacts:
+      - pizzaproduct.zip
+      name: pizzaproduct
+      target-path: resources/
+    - artifacts:
+      - pizzatopizzaproduct.zip
+      name: pizzatopizzaproduct
+      target-path: resources/
 - name: product
   type: html5
   path: app/product
@@ -68,6 +80,36 @@ modules:
 - name: supplyitems
   type: html5
   path: app/supply_items
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: pizza
+  type: html5
+  path: app/pizza
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: pizzaproduct
+  type: html5
+  path: app/pizza_product
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: pizzatopizzaproduct
+  type: html5
+  path: app/pizza_topizzaproduct
   build-parameters:
     build-result: dist
     builder: custom
