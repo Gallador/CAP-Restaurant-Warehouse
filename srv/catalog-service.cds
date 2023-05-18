@@ -9,7 +9,9 @@ service CatalogService {
     entity Order as projection on my.Order;
     entity OrderItem as projection on my.OrderItem;
     entity Size as projection on my.Size;
-    entity Grammar as projection on my.Grammar;
+    entity Grammar as projection on my.Grammar actions{
+        action FillGrammarList()
+    };
     entity Supply as projection on my.Supply;
     entity SupplyItems as projection on my.SupplyItems;
 

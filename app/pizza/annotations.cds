@@ -2,7 +2,7 @@ using CatalogService as service from '../../srv/catalog-service';
 
 annotate service.Pizza with @(
     UI : { 
-        Identification  : [{Value: pizzaID}],
+        Identification  : [{Value: ID}],
         SelectionFields  : [ pizzaName ],
         LineItem  : [
             {

@@ -25,7 +25,11 @@
         "watch-supply_items": "cds watch --open supply_items/webapp/index.html?sap-ui-xx-viewCache=false",
         "watch-pizza": "cds watch --open pizza/webapp/index.html?sap-ui-xx-viewCache=false",
         "watch-pizza_product": "cds watch --open pizza_product/webapp/index.html?sap-ui-xx-viewCache=false",
-        "watch-pizza_topizzaproduct": "cds watch --open pizza_topizzaproduct/webapp/index.html?sap-ui-xx-viewCache=false"
+        "watch-pizza_topizzaproduct": "cds watch --open pizza_topizzaproduct/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-size": "cds watch --open size/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-grammar": "cds watch --open grammar/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-order_item": "cds watch --open order_item/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-order": "cds watch --open order/webapp/index.html?sap-ui-xx-viewCache=false"
     },
     "cds": {
         "hana": {
@@ -46,6 +50,10 @@
         "app/supply_items",
         "app/pizza",
         "app/pizza_product",
-        "app/pizza_topizzaproduct"
+        "app/pizza_topizzaproduct",
+        "app/size",
+        "app/grammar",
+        "app/order_item",
+        "app/order"
     ]
 }

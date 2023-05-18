@@ -57,6 +57,22 @@ modules:
       - pizzatopizzaproduct.zip
       name: pizzatopizzaproduct
       target-path: resources/
+    - artifacts:
+      - size.zip
+      name: size
+      target-path: resources/
+    - artifacts:
+      - grammar.zip
+      name: grammar
+      target-path: resources/
+    - artifacts:
+      - orderitem.zip
+      name: orderitem
+      target-path: resources/
+    - artifacts:
+      - order.zip
+      name: order
+      target-path: resources/
 - name: product
   type: html5
   path: app/product
@@ -110,6 +126,46 @@ modules:
 - name: pizzatopizzaproduct
   type: html5
   path: app/pizza_topizzaproduct
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: size
+  type: html5
+  path: app/size
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: grammar
+  type: html5
+  path: app/grammar
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: orderitem
+  type: html5
+  path: app/order_item
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: order
+  type: html5
+  path: app/order
   build-parameters:
     build-result: dist
     builder: custom

@@ -42,7 +42,6 @@ entity PizzaProduct : cuid, managed
 entity Order : cuid, managed
 {
     orderID : Integer;
-    orderQuantity : Decimal;
     toOrderItem : Composition of many OrderItem on toOrderItem.order = $self;
 }
 
@@ -52,6 +51,7 @@ entity OrderItem : cuid, managed
     order : Association to one Order;
     pizza : Association to one Pizza;
     size : Association to one Size;
+    orderQuantity : Decimal;
 }
 
 entity Size : cuid, managed

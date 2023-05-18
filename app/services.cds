@@ -34,3 +34,31 @@ using from './pizza_product/annotations';
 using from './pizza_product/capabilities';
 using from './pizza_product/field-control';
 using from './pizza_product/labels';
+
+// SIZE
+
+using from './size/annotations';
+using from './size/capabilities';
+using from './size/field-control';
+using from './size/labels';
+
+// GRAMMAR
+
+using from './grammar/annotations';
+using from './grammar/capabilities';
+using from './grammar/field-control';
+using from './grammar/labels';
+
+// ORDER ITEM
+
+using from './order_item/annotations';
+using from './order_item/capabilities';
+using from './order_item/field-control';
+using from './order_item/labels';
+
+// ORDER
+
+using from './order/annotations';
+using from './order/capabilities';
+using from './order/field-control';
+using from './order/labels';
