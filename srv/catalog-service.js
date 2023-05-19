@@ -3,7 +3,7 @@ const db = cds.db;
 
 module.exports = cds.service.impl(async function () {
 
-    let { Supply, SupplyItems, Product, Pizza, PizzaProduct, Grammar, Order, OrderItem } = this.entities;
+    let { Supply, SupplyItems, Product, Pizza, PizzaProduct, Grammar, Order, OrderItem, Size } = this.entities;
 
     this.before('NEW', 'Supply', async (req) => {
         const { maxID } = await SELECT.one`max(supplyID) as maxID`.from(Supply);
@@ -26,18 +26,33 @@ module.exports = cds.service.impl(async function () {
         req.data.orderID = maxID + 1;
     });
 
+    this.after('CREATE','Order', async (req) => {
+        const { toOrderItem } = req;
+        toOrderItem.forEach(async orderItem => {
+            const { pizza_ID, size_ID, orderQuantity } = orderItem;
+            const pizzaProducts = await SELECT.from(PizzaProduct).where({pizza_ID:pizza_ID});
+            const { sizeIndex } = await SELECT.one`sizeIndex`.from(Size).where({ID:size_ID});
+            pizzaProducts.forEach( async pizzaProduct => {
+                const { product_ID } = pizzaProduct;
+                const { basicGrammarAmount } = await SELECT.one`basicGrammarAmount`.from(Grammar).where({product_ID:product_ID});
+                const productConsumption = basicGrammarAmount * sizeIndex * orderQuantity;
+                await UPDATE(Product, product_ID).with({ productBalance: { '-=': productConsumption } });
+            });
+        });
+    });
+
     this.after('CREATE', 'Supply', async (req) => {
         const { toSupplyItems } = req;
         toSupplyItems.forEach(async supplyItem => {
             const { product_ID, supplyAmount } = supplyItem;
             await UPDATE(Product, product_ID).with({ productBalance: { '+=': supplyAmount } });
-        })
+        });
     });
 
     this.on('CANCEL', 'SupplyItems', async (req) => {
         const { ID } = req.data;
-        const supplyItem = await SELECT.one.from(SupplyItems).where({ID:ID})
-        const {product_ID, supplyAmount} = supplyItem
+        const supplyItem = await SELECT.one.from(SupplyItems).where({ID:ID});
+        const {product_ID, supplyAmount} = supplyItem;
         await UPDATE(Product, product_ID).with({ productBalance: {'-=': supplyAmount} });
     });
 

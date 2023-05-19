@@ -5,4 +5,4 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:4004/catalog/Product?$expand=toGrammar
+GET http://localhost:4004/catalog/Pizza?$expand=toPizzaProduct
