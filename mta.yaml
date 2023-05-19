@@ -3,211 +3,206 @@ ID: warehouse
 description: A simple CAP project.
 version: 1.0.0
 modules:
-- name: warehouse-srv
-  type: nodejs
-  path: gen/srv
-  requires:
-  - name: warehouse-db
-  provides:
-  - name: srv-api
-    properties:
-      srv-url: ${default-url}
-  parameters:
-    buildpack: nodejs_buildpack
-  build-parameters:
-    builder: npm-ci
-- name: warehouse-db-deployer
-  type: hdb
-  path: gen/db
-  requires:
-  - name: warehouse-db
-  parameters:
-    buildpack: nodejs_buildpack
-- name: warehouse-app-content
-  type: com.sap.application.content
-  path: .
-  requires:
-  - name: warehouse-repo-host
-    parameters:
-      content-target: true
-  build-parameters:
-    build-result: resources
+  - name: warehouse-srv
+    type: nodejs
+    path: gen/srv
     requires:
-    - artifacts:
-      - product.zip
-      name: product
-      target-path: resources/
-    - artifacts:
-      - supply.zip
-      name: supply
-      target-path: resources/
-    - artifacts:
-      - supplyitems.zip
-      name: supplyitems
-      target-path: resources/
-    - artifacts:
-      - pizza.zip
-      name: pizza
-      target-path: resources/
-    - artifacts:
-      - pizzaproduct.zip
-      name: pizzaproduct
-      target-path: resources/
-    - artifacts:
-      - pizzatopizzaproduct.zip
-      name: pizzatopizzaproduct
-      target-path: resources/
-    - artifacts:
-      - size.zip
-      name: size
-      target-path: resources/
-    - artifacts:
-      - grammar.zip
-      name: grammar
-      target-path: resources/
-    - artifacts:
-      - orderitem.zip
-      name: orderitem
-      target-path: resources/
-    - artifacts:
-      - order.zip
-      name: order
-      target-path: resources/
-- name: product
-  type: html5
-  path: app/product
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
-- name: supply
-  type: html5
-  path: app/supply
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
-- name: supplyitems
-  type: html5
-  path: app/supply_items
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
-- name: pizza
-  type: html5
-  path: app/pizza
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
-- name: pizzaproduct
-  type: html5
-  path: app/pizza_product
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
-- name: pizzatopizzaproduct
-  type: html5
-  path: app/pizza_topizzaproduct
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
-- name: size
-  type: html5
-  path: app/size
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
-- name: grammar
-  type: html5
-  path: app/grammar
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
-- name: orderitem
-  type: html5
-  path: app/order_item
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
-- name: order
-  type: html5
-  path: app/order
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
+      - name: warehouse-db
+    provides:
+      - name: srv-api
+        properties:
+          srv-url: ${default-url}
+    parameters:
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm-ci
+  - name: warehouse-db-deployer
+    type: hdb
+    path: gen/db
+    requires:
+      - name: warehouse-db
+    parameters:
+      buildpack: nodejs_buildpack
+  - name: warehouse-app-content
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: warehouse-repo-host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+            - product.zip
+          name: product
+          target-path: resources/
+        - artifacts:
+            - supply.zip
+          name: supply
+          target-path: resources/
+        - artifacts:
+            - supplyitems.zip
+          name: supplyitems
+          target-path: resources/
+        - artifacts:
+            - pizza.zip
+          name: pizza
+          target-path: resources/
+        - artifacts:
+            - pizzaproduct.zip
+          name: pizzaproduct
+          target-path: resources/
+        - artifacts:
+            - size.zip
+          name: size
+          target-path: resources/
+        - artifacts:
+            - grammar.zip
+          name: grammar
+          target-path: resources/
+        - artifacts:
+            - orderitem.zip
+          name: orderitem
+          target-path: resources/
+        - artifacts:
+            - order.zip
+          name: order
+          target-path: resources/
+  - name: product
+    type: html5
+    path: app/product
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms:
+        []
+  - name: supply
+    type: html5
+    path: app/supply
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms:
+        []
+  - name: supplyitems
+    type: html5
+    path: app/supply_items
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms:
+        []
+  - name: pizza
+    type: html5
+    path: app/pizza
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms:
+        []
+  - name: pizzaproduct
+    type: html5
+    path: app/pizza_product
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms:
+        []
+  - name: size
+    type: html5
+    path: app/size
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms:
+        []
+  - name: grammar
+    type: html5
+    path: app/grammar
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms:
+        []
+  - name: orderitem
+    type: html5
+    path: app/order_item
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms:
+        []
+  - name: order
+    type: html5
+    path: app/order
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms:
+        []
 resources:
-- name: warehouse-db
-  type: com.sap.xs.hdi-container
-  parameters:
-    service: hana
-    service-plan: hdi-shared
-- name: warehouse-repo-host
-  type: org.cloudfoundry.managed-service
-  parameters:
-    service: html5-apps-repo
-    service-name: warehouse-html5-srv
-    service-plan: app-host
-- name: warehouse-destination-service
-  type: org.cloudfoundry.managed-service
-  parameters:
-    config:
-      HTML5Runtime_enabled: false
-      init_data:
-        instance:
-          destinations:
-          - Authentication: NoAuthentication
-            Name: ui5
-            ProxyType: Internet
-            Type: HTTP
-            URL: https://ui5.sap.com
-          existing_destinations_policy: update
-      version: 1.0.0
-    service: destination
-    service-name: warehouse-destination-service
-    service-plan: lite
+  - name: warehouse-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+  - name: warehouse-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-name: warehouse-html5-srv
+      service-plan: app-host
+  - name: warehouse-destination-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        HTML5Runtime_enabled: false
+        init_data:
+          instance:
+            destinations:
+              - Authentication: NoAuthentication
+                Name: ui5
+                ProxyType: Internet
+                Type: HTTP
+                URL: https://ui5.sap.com
+            existing_destinations_policy: update
+        version: 1.0.0
+      service: destination
+      service-name: warehouse-destination-service
+      service-plan: lite
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true
 build-parameters:
   before-all:
-  - builder: custom
-    commands:
-    - npx -p @sap/cds-dk cds build --production
+    - builder: custom
+      commands:
+        - npx -p @sap/cds-dk cds build --production
