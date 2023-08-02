@@ -1,59 +1,62 @@
 {
-  "name": "warehouse",
-  "version": "1.0.0",
-  "description": "A simple CAP project.",
-  "repository": "<Add your repository here>",
-  "license": "UNLICENSED",
-  "private": true,
-  "dependencies": {
-    "@sap/cds": "^6.8.1",
-    "express": "^4",
-    "hdb": "^0.19.5"
-  },
-  "devDependencies": {
-    "@sap/ux-specification": "^1.108.5",
-    "rimraf": "^3.0.2",
-    "sqlite3": "^5.1.6"
-  },
-  "scripts": {
-    "start": "cds-serve",
-    "watch-product": "cds watch --open product/webapp/index.html?sap-ui-xx-viewCache=false",
-    "undeploy": "cf undeploy warehouse --delete-services --delete-service-keys --delete-service-brokers",
-    "build": "rimraf resources mta_archives && mbt build --mtar archive",
-    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
-    "watch-supply": "cds watch --open supply/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-supply_items": "cds watch --open supply_items/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-pizza": "cds watch --open pizza/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-pizza_product": "cds watch --open pizza_product/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-pizza_topizzaproduct": "cds watch --open pizza_topizzaproduct/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-size": "cds watch --open size/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-grammar": "cds watch --open grammar/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-order_item": "cds watch --open order_item/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-order": "cds watch --open order/webapp/index.html?sap-ui-xx-viewCache=false"
-  },
-  "cds": {
-    "hana": {
-      "deploy-format": "hdbtable"
+    "name": "warehouse",
+    "version": "1.0.0",
+    "description": "A simple CAP project.",
+    "repository": "<Add your repository here>",
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "@sap/cds": "^6.8.1",
+        "express": "^4",
+        "hdb": "^0.19.0",
+        "passport": "^0.6.0",
+        "@sap/xssec": "^3"
     },
-    "requires": {
-      "db": {
-        "kind": "sql",
-        "credentials": {
-          "database": "warehouse.db"
+    "devDependencies": {
+        "@sap/ux-specification": "^1.108.5",
+        "rimraf": "^3.0.2",
+        "sqlite3": "^5.1.6"
+    },
+    "scripts": {
+        "start": "cds-serve",
+        "watch-product": "cds watch --open product/webapp/index.html?sap-ui-xx-viewCache=false",
+        "undeploy": "cf undeploy warehouse --delete-services --delete-service-keys --delete-service-brokers",
+        "build": "rimraf resources mta_archives && mbt build --mtar archive",
+        "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+        "deploy-config": "fiori add deploy-config",
+        "watch-supply": "cds watch --open supply/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-supply_items": "cds watch --open supply_items/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-pizza": "cds watch --open pizza/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-pizza_product": "cds watch --open pizza_product/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-pizza_topizzaproduct": "cds watch --open pizza_topizzaproduct/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-size": "cds watch --open size/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-grammar": "cds watch --open grammar/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-order_item": "cds watch --open order_item/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-order": "cds watch --open order/webapp/index.html?sap-ui-xx-viewCache=false"
+    },
+    "cds": {
+        "hana": {
+            "deploy-format": "hdbtable"
+        },
+        "requires": {
+            "db": {
+                "kind": "sql",
+                "credentials": {
+                    "database": "warehouse.db"
+                }
+            }
         }
-      }
-    }
-  },
-  "sapux": [
-    "app/product",
-    "app/supply",
-    "app/supply_items",
-    "app/pizza",
-    "app/pizza_product",
-    "app/pizza_topizzaproduct",
-    "app/size",
-    "app/grammar",
-    "app/order_item",
-    "app/order"
-  ]
+    },
+    "sapux": [
+        "app/product",
+        "app/supply",
+        "app/supply_items",
+        "app/pizza",
+        "app/pizza_product",
+        "app/pizza_topizzaproduct",
+        "app/size",
+        "app/grammar",
+        "app/order_item",
+        "app/order"
+    ]
 }
